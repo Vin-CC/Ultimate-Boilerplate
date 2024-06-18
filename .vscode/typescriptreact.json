@@ -1,0 +1,19 @@
+{
+  "React Functional Component": {
+    "prefix": "rfc",
+    "body": [
+      "import React from 'react';",
+      "",
+      "const ${1:${TM_FILENAME_BASE/(\\w+)(?:-|_)(\\w+)/${1:/capitalize}${2:/capitalize}/g}} = () => {",
+      "  return (",
+      "    <div>",
+      "      $1 Component",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default ${1:${TM_FILENAME_BASE/(\\w+)(?:-|_)(\\w+)/${1:/capitalize}${2:/capitalize}/g}};"
+    ],
+    "description": "Create a React Functional Component"
+  }
+}
