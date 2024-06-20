@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+generator zod {
+  provider         = "zod-prisma-types"
+  output           = "./../zod"
+  createInputTypes = false
+  addIncludeType   = false
+  addSelectType    = false
+}
+
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
+model UserVerificationToken {
+  id      String   @id @default(cuid())
+  userId  String
+  user    User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  token   String
+  expires DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum UserOneTimePasswordType {
+  SIGNUP
+  LOGIN
+  PASSWORD_RESET
+}
+
+model UserOneTimePassword {
+  id         String                  @id @default(cuid())
+  userId     String
+  user       User                    @relation(references: [id], fields: [userId], onDelete: Cascade)
+  code       String
+  type       UserOneTimePasswordType
+  identifier String
+  expires    DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model User {
+  id                            String      @id @default(cuid())
+  name                          String?
+  surname                       String?
+  username                      String?     @unique
+  email                         String?     @unique
+  emailVerified                 DateTime? 
+  emailVerificationToken        String?     @unique 
+  passwordHash                  String?  
+  resetPasswordToken            String?     @unique 
+  resetPasswordTokenExpiry      DateTime?  
+  image                         String?
+  createdAt                     DateTime    @default(now())
+  role                          Role        @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+  oneTimePasswords   UserOneTimePassword[]
+  verificationtokens UserVerificationToken[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
