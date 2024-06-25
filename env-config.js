@@ -5,6 +5,8 @@ const { z } = require("zod");
 const envSchema = z.object({
   GITHUB_ID: z.string(),
   GITHUB_SECRET: z.string(),
+  GOOGLE_ID: z.string(),
+  GOOGLE_SECRET: z.string(),
   POSTGRES_URL_NON_POOLING: z.string(),
   POSTGRES_PRISMA_URL: z.string(),
   NEXT_PUBLIC_BASE_URL: z.string(),

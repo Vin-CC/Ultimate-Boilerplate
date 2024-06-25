@@ -1,5 +1,5 @@
-import { z } from "zod";
 import * as PrismaClient from "@prisma/client";
+import { z } from "zod";
 
 /////////////////////////////////////////
 // ENUMS
@@ -8,19 +8,33 @@ import * as PrismaClient from "@prisma/client";
 // PRISMA GENERATED ENUMS
 //------------------------------------------------------
 
-export const TransactionIsolationLevelSchema = z.nativeEnum(PrismaClient.Prisma.TransactionIsolationLevel);
+export const TransactionIsolationLevelSchema = z.nativeEnum(
+  PrismaClient.Prisma.TransactionIsolationLevel
+);
 
-export const UserScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.UserScalarFieldEnum);
+export const UserScalarFieldEnumSchema = z.nativeEnum(
+  PrismaClient.Prisma.UserScalarFieldEnum
+);
 
-export const AccountScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.AccountScalarFieldEnum);
+export const AccountScalarFieldEnumSchema = z.nativeEnum(
+  PrismaClient.Prisma.AccountScalarFieldEnum
+);
 
-export const SessionScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.SessionScalarFieldEnum);
+export const SessionScalarFieldEnumSchema = z.nativeEnum(
+  PrismaClient.Prisma.SessionScalarFieldEnum
+);
 
-export const VerificationTokenScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.VerificationTokenScalarFieldEnum);
+export const VerificationTokenScalarFieldEnumSchema = z.nativeEnum(
+  PrismaClient.Prisma.VerificationTokenScalarFieldEnum
+);
 
-export const AuthenticatorScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.AuthenticatorScalarFieldEnum);
+export const AuthenticatorScalarFieldEnumSchema = z.nativeEnum(
+  PrismaClient.Prisma.AuthenticatorScalarFieldEnum
+);
 
-export const UserOneTimePasswordScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.UserOneTimePasswordScalarFieldEnum);
+export const UserOneTimePasswordScalarFieldEnumSchema = z.nativeEnum(
+  PrismaClient.Prisma.UserOneTimePasswordScalarFieldEnum
+);
 
 export const SortOrderSchema = z.nativeEnum(PrismaClient.Prisma.SortOrder);
 
@@ -33,7 +47,9 @@ export const NullsOrderSchema = z.nativeEnum(PrismaClient.Prisma.NullsOrder);
 
 export const RoleSchema = z.nativeEnum(PrismaClient.Role);
 
-export const UserOneTimePasswordTypeSchema = z.nativeEnum(PrismaClient.UserOneTimePasswordType);
+export const UserOneTimePasswordTypeSchema = z.nativeEnum(
+  PrismaClient.UserOneTimePasswordType
+);
 
 /////////////////////////////////////////
 // MODELS
