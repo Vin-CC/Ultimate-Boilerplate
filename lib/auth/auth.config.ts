@@ -5,6 +5,7 @@ import bcryptjs from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import { FakeAdapter } from "./fake-adaptater";
 
 // Why the auth options is created without PrismaAdapter and JWT strategy ? See 👉️ https://authjs.dev/guides/edge-compatibility
@@ -33,6 +34,10 @@ export default {
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
     }),
     Credentials({
       credentials: {
