@@ -6,8 +6,8 @@ import {
   Divider,
   Input
 } from "@nextui-org/react";
-import { Github } from "lucide-react";
-import GoogleIcon from "../icons/google-icon";
+import GithubProviderButton from "./github-provider-button";
+import GoogleProviderButton from "./google-provider-button copy";
 import SignInEmailPasswordForm from "./sign-in-email-password-form";
 
 export default function SignInForm() {
@@ -32,14 +32,8 @@ export default function SignInForm() {
         </div>
         <Divider />
         <div className="flex flex-col gap-2">
-          <Button size="lg">
-            <GoogleIcon className="w-5 h-5" />
-            <span>Signin with GitHub</span>
-          </Button>
-          <Button size="lg">
-            <Github className="w-5 h-5" />
-            <span>Signin with GitHub</span>
-          </Button>
+        <GoogleProviderButton>Signin with Google</GoogleProviderButton>
+            <GithubProviderButton>Signin with GitHub</GithubProviderButton>
         </div>
       </CardBody>
     </Card>

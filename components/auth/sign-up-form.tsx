@@ -1,9 +1,8 @@
-import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import H1 from "../h1";
-import GoogleIcon from "../icons/google-icon";
 import TextDivider from "../text-divider";
 import GithubProviderButton from "./github-provider-button";
+import GoogleProviderButton from "./google-provider-button copy";
 import SignUpEmailPasswordForm from "./sign-up-email-password-form";
 import SignUpMagicLink from "./sign-up-magic-link";
 
@@ -23,10 +22,7 @@ export default function SignUpForm() {
           <SignUpMagicLink />
           <TextDivider>Or connect with providers</TextDivider>
           <div className="flex flex-col gap-2">
-            <Button size="lg">
-              <GoogleIcon className="w-5 h-5" />
-              <span>Signup with Google</span>
-            </Button>
+            <GoogleProviderButton>Signup with Google</GoogleProviderButton>
             <GithubProviderButton>Signup with GitHub</GithubProviderButton>
           </div>
           <p>
