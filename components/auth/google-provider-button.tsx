@@ -13,7 +13,7 @@ export default function GoogleProviderButton({
   return (
     <Button
       onClick={() => {
-        signIn("github");
+        signIn("google");
       }}
       size="lg"
     >

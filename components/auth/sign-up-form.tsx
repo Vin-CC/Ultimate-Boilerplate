@@ -2,7 +2,7 @@ import Link from "next/link";
 import H1 from "../h1";
 import TextDivider from "../text-divider";
 import GithubProviderButton from "./github-provider-button";
-import GoogleProviderButton from "./google-provider-button copy";
+import GoogleProviderButton from "./google-provider-button";
 import SignUpEmailPasswordForm from "./sign-up-email-password-form";
 import SignUpMagicLink from "./sign-up-magic-link";
 
