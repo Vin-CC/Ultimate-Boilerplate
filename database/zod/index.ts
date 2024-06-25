@@ -10,17 +10,17 @@ import * as PrismaClient from "@prisma/client";
 
 export const TransactionIsolationLevelSchema = z.nativeEnum(PrismaClient.Prisma.TransactionIsolationLevel);
 
-export const AccountScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.AccountScalarFieldEnum);
+export const UserScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.UserScalarFieldEnum);
 
-export const UserVerificationTokenScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.UserVerificationTokenScalarFieldEnum);
+export const AccountScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.AccountScalarFieldEnum);
 
 export const SessionScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.SessionScalarFieldEnum);
 
-export const UserOneTimePasswordScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.UserOneTimePasswordScalarFieldEnum);
-
-export const UserScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.UserScalarFieldEnum);
-
 export const VerificationTokenScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.VerificationTokenScalarFieldEnum);
+
+export const AuthenticatorScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.AuthenticatorScalarFieldEnum);
+
+export const UserOneTimePasswordScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.UserOneTimePasswordScalarFieldEnum);
 
 export const SortOrderSchema = z.nativeEnum(PrismaClient.Prisma.SortOrder);
 
@@ -39,43 +39,74 @@ export const UserOneTimePasswordTypeSchema = z.nativeEnum(PrismaClient.UserOneTi
 // MODELS
 /////////////////////////////////////////
 
-// ACCOUNT
+// USER
 //------------------------------------------------------
 
-export const AccountSchema = z.object({
+export const UserSchema = z.object({
+  role: RoleSchema,
   id: z.string(),
-  userId: z.string(),
-  providerType: z.string(),
-  providerId: z.string(),
-  providerAccountId: z.string(),
-  refreshToken: z.string().nullish(),
-  accessToken: z.string().nullish(),
-  accessTokenExpires: z.date().nullish(),
+  name: z.string().nullish(),
+  email: z.string(),
+  emailVerified: z.date().nullish(),
+  image: z.string().nullish(),
+  passwordHash: z.string().nullish(),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
 
-// USER VERIFICATION TOKEN
+// ACCOUNT
 //------------------------------------------------------
 
-export const UserVerificationTokenSchema = z.object({
-  id: z.string(),
+export const AccountSchema = z.object({
   userId: z.string(),
-  token: z.string(),
-  expires: z.date(),
+  type: z.string(),
+  provider: z.string(),
+  providerAccountId: z.string(),
+  refresh_token: z.string().nullish(),
+  access_token: z.string().nullish(),
+  expires_at: z.number().nullish(),
+  token_type: z.string().nullish(),
+  scope: z.string().nullish(),
+  id_token: z.string().nullish(),
+  session_state: z.string().nullish(),
   createdAt: z.date(),
+  updatedAt: z.date(),
 });
 
 // SESSION
 //------------------------------------------------------
 
 export const SessionSchema = z.object({
-  id: z.string(),
   sessionToken: z.string(),
   userId: z.string(),
   expires: z.date(),
   createdAt: z.date(),
   updatedAt: z.date(),
+});
+
+// VERIFICATION TOKEN
+//------------------------------------------------------
+
+export const VerificationTokenSchema = z.object({
+  identifier: z.string(),
+  token: z.string(),
+  expires: z.date(),
+  userId: z.string().nullish(),
+  createdAt: z.date(),
+});
+
+// AUTHENTICATOR
+//------------------------------------------------------
+
+export const AuthenticatorSchema = z.object({
+  credentialID: z.string(),
+  userId: z.string(),
+  providerAccountId: z.string(),
+  credentialPublicKey: z.string(),
+  counter: z.number(),
+  credentialDeviceType: z.string(),
+  credentialBackedUp: z.boolean(),
+  transports: z.string().nullish(),
 });
 
 // USER ONE TIME PASSWORD
@@ -89,34 +120,4 @@ export const UserOneTimePasswordSchema = z.object({
   identifier: z.string(),
   expires: z.date(),
   createdAt: z.date(),
-});
-
-// USER
-//------------------------------------------------------
-
-export const UserSchema = z.object({
-  role: RoleSchema,
-  id: z.string(),
-  name: z.string().nullish(),
-  surname: z.string().nullish(),
-  username: z.string().nullish(),
-  email: z.string().nullish(),
-  emailVerified: z.date().nullish(),
-  emailVerificationToken: z.string().nullish(),
-  passwordHash: z.string().nullish(),
-  resetPasswordToken: z.string().nullish(),
-  resetPasswordTokenExpiry: z.date().nullish(),
-  image: z.string().nullish(),
-  createdAt: z.date(),
-});
-
-// VERIFICATION TOKEN
-//------------------------------------------------------
-
-export const VerificationTokenSchema = z.object({
-  identifier: z.string(),
-  token: z.string(),
-  expires: z.date(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
 });

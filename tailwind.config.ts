@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 const { nextui } = require("@nextui-org/react");
+const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const config: Config = {
   content: [
@@ -16,9 +17,12 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontSize: {
-        title: "2.25rem",
+        title: "2.50rem",
         subtitle: "1.875rem",
         text: "1.5rem",
+      },
+      fontFamily: {
+        cal: ["var(--font-cal)", ...fontFamily.sans],
       },
       maxWidth: {
         small: "320px", // min-w-small

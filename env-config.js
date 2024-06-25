@@ -14,7 +14,8 @@ const envSchema = z.object({
   SIGNUP_EMAIL_TRANSACTIONAL_ID: z.string(),
   SIGNIN_EMAIL_TRANSACTIONAL_ID: z.string(),
   RESET_PASSWORD_EMAIL_TRANSACTIONAL_ID: z.string(),
-  MAGIC_LINK_TRANSACTIONAL_ID: z.string()
+  MAGIC_LINK_TRANSACTIONAL_ID: z.string(),
+  AUTH_SECRET: z.string(),
 });
 
 function validateEnv() {

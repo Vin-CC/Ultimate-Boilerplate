@@ -27,6 +27,7 @@ export default function SignInEmailPasswordForm() {
             password: params.password,
             redirect: false,
           });
+          console.log("SignIn response:", res);
           if (res?.error) {
             formik.setErrors({
               email: getErrorMessage(res.error),

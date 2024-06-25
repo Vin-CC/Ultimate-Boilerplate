@@ -1,6 +1,7 @@
 import AuthProvider from "@/lib/auth-provider";
 import ToastProvider from "@/lib/toast/toast-provider";
 import { cn } from "@/lib/utils";
+import { cal } from "@/styles/fonts";
 import { NextUIProvider } from "@nextui-org/react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -20,9 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className)}>
+      <body className={cn(inter.className, cal.variable,)}>
         <AuthProvider>
-          <NextUIProvider className="h-screen w-screen">
+          <NextUIProvider className="h-screen w-screen text-foreground bg-background">
             <ToastProvider>{children}</ToastProvider>
           </NextUIProvider>
         </AuthProvider>

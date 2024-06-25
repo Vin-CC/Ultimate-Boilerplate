@@ -46,7 +46,7 @@ export default function ResetPasswordNewPassword({
             token,
             password: params.password,
           });
-          router.push("/auth/signin");
+          router.push("/signin");
           resolve("Password reset successfully");
         } catch (error) {
           formik.setErrors({

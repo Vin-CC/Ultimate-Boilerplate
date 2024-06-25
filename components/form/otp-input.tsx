@@ -131,3 +131,4 @@ const OtpOneInput = forwardRef(
     );
   }
 );
+OtpOneInput.displayName = "OtpOneInput";

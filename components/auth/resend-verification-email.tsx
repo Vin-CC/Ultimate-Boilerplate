@@ -12,7 +12,7 @@ export default function ResendVerificationEmail({
 }) {
   return (
     <p className="text-neutral-600">
-      Vous n'avez pas reçu de code ?{" "}
+      Vous n&apos;avez pas reçu de code ?{" "}
       <button
         onClick={() => {
           toastPromise(async(resolve, reject) => {

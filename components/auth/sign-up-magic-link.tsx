@@ -4,6 +4,7 @@ import { toastPromise } from "@/lib/toast/toast";
 import { Button } from "@nextui-org/button";
 import { useFormik } from "formik";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import EmailInput from "../form/email-input";
@@ -13,6 +14,7 @@ const schema = z.object({
 });
 
 export default function SignUpMagicLink() {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -20,14 +22,13 @@ export default function SignUpMagicLink() {
     },
     validationSchema: toFormikValidationSchema(schema),
     onSubmit: async (params) => {
-      console.log(params);
       toastPromise(async (resolve, reject) => {
         try {
           signIn("email", {
             email: params.email,
             redirect: false,
-            redirectUrl: `${window.location.origin}/`,
           });
+          router.push("/magic-link-email-send")
           resolve();
         } catch (error) {
           reject(error);

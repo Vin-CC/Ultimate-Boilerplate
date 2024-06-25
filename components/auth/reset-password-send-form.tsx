@@ -6,6 +6,7 @@ import { toastPromise } from "@/lib/toast/toast";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import EmailInput from "../form/email-input";
@@ -15,6 +16,7 @@ const schema = z.object({
 });
 
 export default function ResetPasswordSendForm() {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,6 +28,7 @@ export default function ResetPasswordSendForm() {
           let res = await sendResetPasswordEmail({
             email: params.email,
           });
+          router.push("/reset-password/send-email/success");
           resolve();
         } catch (error) {
           formik.setErrors({

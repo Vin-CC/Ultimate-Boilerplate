@@ -1,6 +1,6 @@
 "use server";
 
-import { Prisma, Role, UserOneTimePasswordType } from "@prisma/client";
+import { Prisma, UserOneTimePasswordType } from "@prisma/client";
 import { randomInt } from "crypto";
 import moment from "moment";
 import { z } from "zod";
@@ -62,7 +62,7 @@ export const generateVerificationToken = async ({
   userId: string;
   expireDuration?: number;
 }) => {
-  const storedUserTokens = await db.userVerificationToken.findMany({
+  const storedUserTokens = await db.verificationToken.findMany({
     where: {
       userId,
     },
@@ -90,11 +90,24 @@ export const generateVerificationToken = async ({
     }
   );
 
-  await db.userVerificationToken.create({
+  const data = await db.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      email: true,
+    },
+  });
+  if (!data?.email) {
+    throw new ActionError("user_not_found");
+  }
+
+  await db.verificationToken.create({
     data: {
       token,
       expires: new Date(new Date().getTime() + expireDuration),
       userId,
+      identifier: data.email,
     },
   });
 
@@ -111,10 +124,11 @@ export async function signUpWithPassword({
     const user = await db.user.create({
       data: {
         email,
-        role: Role.USER,
         passwordHash,
       },
     });
+
+    console.log("WHY MY USER IS NOT");
 
     // Jeton de vérification pour vérifier l'email de l'utilisateur
     const token = await generateVerificationToken({
@@ -193,7 +207,7 @@ export async function resendVerificationEmail({
       type,
     },
   });
-  await db.userVerificationToken.deleteMany({
+  await db.verificationToken.deleteMany({
     where: {
       userId: user.id,
     },
@@ -274,7 +288,7 @@ export async function verifyOtp({
       type,
     },
   });
-  await db.userVerificationToken.deleteMany({
+  await db.verificationToken.deleteMany({
     where: {
       userId: user.id,
     },
@@ -301,7 +315,7 @@ export async function verifyToken({ token }: { token?: string }) {
       userId: decoded.userId,
     },
   });
-  await db.userVerificationToken.deleteMany({
+  await db.verificationToken.deleteMany({
     where: {
       userId: decoded.userId,
     },
@@ -317,21 +331,21 @@ export async function sendResetPasswordEmail({ email }: { email: string }) {
   if (!user) {
     throw new ActionError("user_not_found");
   }
-  const userVerificationToken = await db.userVerificationToken.findFirst({
+  const verificationToken = await db.verificationToken.findFirst({
     where: {
       userId: user.id,
     },
   });
   if (
-    userVerificationToken &&
+    verificationToken &&
     moment()
       .subtract(2, "minutes")
-      .isBefore(moment(userVerificationToken.createdAt))
+      .isBefore(moment(verificationToken.createdAt))
   ) {
     throw new ActionError("token_not_expired");
   }
 
-  await db.userVerificationToken.deleteMany({
+  await db.verificationToken.deleteMany({
     where: {
       userId: user.id,
     },
@@ -370,13 +384,16 @@ export async function resetPassword({
     throw new ActionError("invalid_token");
   }
 
-  const currentToken = await db.userVerificationToken.findFirst({
+  const verificationToken = await db.verificationToken.findFirst({
     where: {
       userId: decoded.userId,
     },
   });
 
-  if (currentToken && moment().isAfter(moment(currentToken.expires))) {
+  if (
+    verificationToken &&
+    moment().isAfter(moment(verificationToken.expires))
+  ) {
     throw new ActionError("token_expired");
   }
 
@@ -400,7 +417,7 @@ export async function resetPassword({
     },
   });
 
-  await db.userVerificationToken.deleteMany({
+  await db.verificationToken.deleteMany({
     where: {
       userId: decoded.userId,
     },

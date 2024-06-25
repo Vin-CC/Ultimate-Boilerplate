@@ -1,41 +1,48 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Divider
-} from "@nextui-org/react";
-import { Github } from "lucide-react";
+import { Button } from "@nextui-org/react";
 import Link from "next/link";
+import H1 from "../h1";
 import GoogleIcon from "../icons/google-icon";
+import TextDivider from "../text-divider";
+import GithubProviderButton from "./github-provider-button";
 import SignUpEmailPasswordForm from "./sign-up-email-password-form";
 import SignUpMagicLink from "./sign-up-magic-link";
 
 export default function SignUpForm() {
   return (
-    <Card className="max-w-medium w-full">
-      <CardHeader>
-        <h1 className="text-title">Signup</h1>
-      </CardHeader>
-      <CardBody className="flex flex-col gap-6">
-        <SignUpEmailPasswordForm />
-        <Divider />
-        <SignUpMagicLink />
-        <Divider />
-        <div className="flex flex-col gap-2">
-          <Button size="lg">
-            <GoogleIcon className="w-5 h-5" />
-            <span>Signup with GitHub</span>
-          </Button>
-          <Button size="lg">
-            <Github className="w-5 h-5" />
-            <span>Signup with GitHub</span>
-          </Button>
+    <div className="max-w-medium p-5 sm:p-10 h-full flex flex-col justify-center w-full">
+      <div className="flex grow justify-center flex-col gap-8">
+        <div className="flex flex-col">
+          <H1>Signup</H1>
+          <p className="text-center text-foreground-700 font-medium">
+            Create an account to get started
+          </p>
         </div>
-      </CardBody>
-      <CardFooter>
-        <div className="text-sm md:text-xs">
+        <div className="flex flex-col gap-6">
+          <SignUpEmailPasswordForm />
+          <TextDivider>Or connect with magic link</TextDivider>
+          <SignUpMagicLink />
+          <TextDivider>Or connect with providers</TextDivider>
+          <div className="flex flex-col gap-2">
+            <Button size="lg">
+              <GoogleIcon className="w-5 h-5" />
+              <span>Signup with Google</span>
+            </Button>
+            <GithubProviderButton>Signup with GitHub</GithubProviderButton>
+          </div>
+          <p>
+            Already have an account?{" "}
+            <Link
+              aria-label="Sign in"
+              href="/signin"
+              className="font-semibold underline-offset-2 transition-all hover:underline"
+            >
+              Sign in here
+            </Link>
+          </p>
+        </div>
+      </div>
+      <div className="text-sm text-center flex justify-end flex-col md:text-xs">
+        <p>
           By continuing, you agree to our{" "}
           <Link
             aria-label="Terms of Service"
@@ -54,8 +61,8 @@ export default function SignUpForm() {
             Privacy Policy
           </Link>
           .
-        </div>
-      </CardFooter>
-    </Card>
+        </p>
+      </div>
+    </div>
   );
 }
