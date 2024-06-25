@@ -10,6 +10,8 @@ export class ActionError extends Error {
 export function getErrorMessage(error: unknown) {
   let message: string;
 
+  console.log("Error (in getErrorMessage) : ", error);
+
   if (error instanceof ActionError) {
     message = error.message;
   } else if (error instanceof Error) {

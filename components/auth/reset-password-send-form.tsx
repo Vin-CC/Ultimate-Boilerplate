@@ -3,6 +3,7 @@
 import { sendResetPasswordEmail } from "@/lib/actions/auth";
 import { getErrorMessage } from "@/lib/actions/error";
 import { toastPromise } from "@/lib/toast/toast";
+import { useI18n, useScopedI18n } from "@/locales/client";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { useFormik } from "formik";
@@ -16,6 +17,8 @@ const schema = z.object({
 });
 
 export default function ResetPasswordSendForm() {
+  const t = useScopedI18n("ResetPasswordSendForm");
+  const globalT = useI18n();
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -36,13 +39,13 @@ export default function ResetPasswordSendForm() {
           });
           reject(error);
         }
-      });
+      }, globalT);
     },
   });
   return (
     <Card className="max-w-xl w-full pb-6">
       <CardHeader>
-        <h1 className="text-title">Reset your password</h1>
+        <h1 className="text-title">{t('h1')}</h1>
       </CardHeader>
       <CardBody className="flex flex-col gap-6 !px-6">
         <EmailInput
@@ -59,7 +62,7 @@ export default function ResetPasswordSendForm() {
           color="primary"
           size="lg"
         >
-          <span>Send me an email</span>
+          <span>{t('button')}</span>
         </Button>
       </CardFooter>
     </Card>

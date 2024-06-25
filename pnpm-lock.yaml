@@ -73,6 +73,9 @@ dependencies:
   next-auth:
     specifier: 5.0.0-beta.19
     version: 5.0.0-beta.19(next@14.2.4)(react@18.0.0)
+  next-international:
+    specifier: ^1.2.4
+    version: 1.2.4
   next-transpile-modules:
     specifier: ^10.0.1
     version: 10.0.1
@@ -4681,6 +4684,10 @@ packages:
       side-channel: 1.0.6
     dev: true
 
+  /international-types@0.8.1:
+    resolution: {integrity: sha512-tajBCAHo4I0LIFlmQ9ZWfjMWVyRffzuvfbXCd6ssFt5u1Zw15DN0UBpVTItXdNa1ls+cpQt3Yw8+TxsfGF8JcA==}
+    dev: false
+
   /intl-messageformat@10.5.14:
     resolution: {integrity: sha512-IjC6sI0X7YRjjyVH9aUgdftcmZK7WXdHeil4KwbjDnRWjnVitKpAx3rr6t6di1joFp5188VqKcobOPA6mCLG/w==}
     dependencies:
@@ -5252,6 +5259,14 @@ packages:
       '@auth/core': 0.32.0
       next: 14.2.4(react-dom@18.3.1)(react@18.0.0)
       react: 18.0.0
+    dev: false
+
+  /next-international@1.2.4:
+    resolution: {integrity: sha512-JQvp+h2iSgA/t8hu5S/Lwow1ZErJutQRdpnplxjv4VTlCiND8T95fYih8BjkHcVhQbtM+Wu9Mb1CM32wD9hlWQ==}
+    dependencies:
+      client-only: 0.0.1
+      international-types: 0.8.1
+      server-only: 0.0.1
     dev: false
 
   /next-transpile-modules@10.0.1:

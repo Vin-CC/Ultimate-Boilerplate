@@ -1,8 +1,8 @@
 "use client";
 
-import { getErrorMessage } from "@/lib/actions/error";
 import { toastPromise } from "@/lib/toast/toast";
 import { passwordAuthSchema } from "@/lib/zod-schemas";
+import { useI18n, useScopedI18n } from "@/locales/client";
 import { Button } from "@nextui-org/react";
 import { useFormik } from "formik";
 import { signIn } from "next-auth/react";
@@ -12,6 +12,8 @@ import EmailInput from "../form/email-input";
 import PasswordInput from "../form/password-input";
 
 export default function SignInEmailPasswordForm() {
+  const t = useScopedI18n("SignInEmailPasswordForm");
+  const globalT = useI18n();
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -27,10 +29,9 @@ export default function SignInEmailPasswordForm() {
             password: params.password,
             redirect: false,
           });
-          console.log("SignIn response:", res);
           if (res?.error) {
             formik.setErrors({
-              email: getErrorMessage(res.error),
+              email: globalT('credentials_signin'),
             });
             reject();
           } else {
@@ -39,11 +40,11 @@ export default function SignInEmailPasswordForm() {
           resolve();
         } catch (error) {
           formik.setErrors({
-            email: getErrorMessage(error),
+            email: globalT('credentials_signin'),
           });
           reject(error);
         }
-      });
+      }, globalT);
     },
   });
   return (
@@ -54,6 +55,7 @@ export default function SignInEmailPasswordForm() {
         {...formik.getFieldProps("email")}
       />
       <PasswordInput
+        label={t("password.label")}
         isInvalid={!!formik.errors.password}
         errorMessage={formik.errors.password}
         {...formik.getFieldProps("password")}
@@ -65,10 +67,16 @@ export default function SignInEmailPasswordForm() {
         color="primary"
         size="lg"
       >
-        <span>Signin with password</span>
+        {t("button")}
       </Button>
-      <a href="/reset-password/send-email" className="text-left hover:underline text-sm ml-1" type="button" role="button" aria-label="reset password">
-        Reset your password
+      <a
+        href="/reset-password/send-email"
+        className="text-left hover:underline text-sm ml-1"
+        type="button"
+        role="button"
+        aria-label="reset password"
+      >
+        {t("reset-password")}
       </a>
     </div>
   );

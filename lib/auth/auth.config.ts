@@ -2,7 +2,7 @@ import { getUserByEmail, getUserById } from "@/lib/actions/user";
 import { sendTransactionalEmail } from "@/lib/loops";
 import { passwordAuthSchema } from "@/lib/zod-schemas";
 import bcryptjs from "bcryptjs";
-import type { NextAuthConfig } from "next-auth";
+import { type NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -57,7 +57,6 @@ export default {
           if (!user.emailVerified) {
             throw new Error("email_not_verified");
           }
-
           const passwordIsValid = await bcryptjs.compare(
             validatedCredentials.data.password,
             user.passwordHash

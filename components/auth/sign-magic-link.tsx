@@ -10,10 +10,18 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 import EmailInput from "../form/email-input";
 
 const schema = z.object({
-  email: z.string().email(),
+  email: z
+    .string({
+      required_error: "required_field",
+    })
+    .email("invalid_email"),
 });
 
-export default function SignUpMagicLink() {
+export default function SignMagicLink({
+  text = "Signup with magic link",
+}: {
+  text?: string;
+}) {
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -28,7 +36,7 @@ export default function SignUpMagicLink() {
             email: params.email,
             redirect: false,
           });
-          router.push("/magic-link-email-send")
+          router.push("/magic-link-email-send");
           resolve();
         } catch (error) {
           reject(error);
@@ -51,7 +59,7 @@ export default function SignUpMagicLink() {
         color="secondary"
         size="lg"
       >
-        <span>Signup with magic link</span>
+        <span>{text}</span>
       </Button>
     </div>
   );
